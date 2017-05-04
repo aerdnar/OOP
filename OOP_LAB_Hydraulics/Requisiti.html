@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<style type="text/css">
+<!--
+body {
+	margin: 0.5cm;
+	/*
+	font-size: 13px;
+	*/
+	}
+p   {
+    margin-top: 0.1em;
+    margin-bottom: 0.5em;
+    }
+b   {
+	font-family: monospace;
+	color: MidnightBlue;
+	background: #f8f8f8;
+	border-radius: 2pt;
+	padding: 1pt;
+/*
+    font-size=85%;
+	border: 1pt dotted silver;
+*/
+	}
+	
+i   {
+	color: Navy;
+	font-family: monospace;
+	}
+	
+h1  {
+	font-family: sans-serif;
+	text-align: center;
+    line-height: 1.1em;
+	}
+	
+h2  {
+    /*float: left;*/
+    margin-top: 0;
+    padding: 5px 10px 5px 0px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    line-height: 0.8em;
+	color: RoyalBlue;
+	font-family: sans-serif;
+	border-top: 1px dotted gray;
+	}
+table {
+	float: right;
+	margin: 20px;
+	border-collapse:collapse;
+	border-bottom: 1px solid Navy;
+	border-top: 1px solid Navy;
+	}
+td, th  {
+	padding: 1px 5px 1px 5px;
+	}
+tr:nth-child(even) {
+    background-color: PowderBlue;
+    margin: 1pt solid PowderBlue;
+}
+-->
+</style>
+
+<title>OOP Simulazione Sistema Idraulico</title>
+
+</head>
+<body>
+<h1 style="text-align: center;">Idraulica</h1>
+
+Realizzare il sistema software per la descrizione e la simulazione di
+un sistema idraulico.<br>
+Tutte le classi si trovano nel package <b>hydraulic</b>.<br>
+<!-- <hr style="width: 100%; height: 2px;"> -->
+
+<h2>R1: Elementi e Tubi</h2>
+
+Un sistema idraulico &egrave; composto da elementi (di vario tipo)
+connessi tra loro da tubi. Un sistema &egrave; rappresentato da un
+oggetto di classe <b>HSystem</b> che
+offre i metodo <b>addElement()</b>
+che riceve come parametro un oggetto di classe <b>Element</b> e lo aggiunge alla lista
+interna. Tramite il metodo <b>getElements()</b>
+&egrave; possibile ottenere un array contenente gli elementi, questo
+metodo restituisce un array di oggetti <b>Element</b>.
+
+
+<h2>R2: Elementi semplici</h2>
+
+I tipi di elementi semplici sono: sorgente, rubinetto e scarico che sono rispettivamente rappresentati
+dalle classi <b>Source</b>, <b>Tap</b>, <b>Sink</b>.<br>
+Tutti gli elementi hanno un nome che pu&ograve; essere letto tramite il
+metodo <b>getName()</b>.<br>
+&Egrave; possibile connettere l'uscita di un elemento all'ingresso di un
+altro tramite il metodo <b>connect()</b>
+che riceve come parametro l'elemento al cui ingresso deve essere
+connesso l'elemento sui cui &egrave; invocato: <i>a.connect(b);</i> connette
+l'uscita di <i>a</i> all'ingresso di <i>b</i>. Il metodo <b>connect()</b> invocato su
+Sink non ha nessun effetto e stampa un messaggio d'errore.<br>
+Dato un elemento &egrave; possibile sapere a quale elemento &egrave;
+connesso in uscita tramite il metodo <b>getOutput()</b>
+che resituisce un oggetto di tipo <b>Element</b>.<br>
+
+
+<h2>R3: Elementi complessi</h2>
+
+Oltre agli elementi semplici di cui sopra ci sono degli elementi
+complessi. L'elemento a T rappresentato dalla classe <b>Split</b> permette di suddivide 
+l'input in due flussi in uscita. In tale caso il metodo <b>connect()</b> 
+riceve un ulteriore parametro intero che indica l'uscita a cui connettere l'elemento. 
+Tale intero ha valore <i>0</i> per la prima uscita e <i>1</i> per la seconda. Per sapere
+quali elementi sono connessi in uscita &egrave; possibile utilizzare il
+metodo <b>getOutputs()</b> che restituisce un array di elementi.<br>
+
+
+<h2>R4: Simulazione</h2>
+
+Dato un sistema corretto, ovvero un albero che ha come radice una sorgente
+ed in cui ogni percorso termina con uno scarico, &egrave; 
+possibile fare un calcolo delle portate e di come vengono ripartite.<br>
+<p>
+Il calcolo prevede due fasi: una prima fase i cui si definiscono i parametri
+dei diversi elementi del sistema e una seconda fase in cui si avvia la simulazione.
+<p>
+&Egrave; possibile definire la portata per una sorgente (Source) con il metodo 
+<b>setFlow()</b> che riceve come
+parametro un numero floating point che rappresenta i metri cubi al
+secondo.<br>
+Per i rubinetti (Tap) &egrave; possibile impostare la loro apertura tramite
+il metodo <b>setOpen()</b> che riceve
+come parametro un boolean. Se un rubinetto &egrave; aperto la porta
+all'ingresso &egrave; uguale a quell all'uscita.<br>
+Per i raccordi a T la portata in ingresso viene ripartita equamente tra
+le due uscite.<br>
+<p>
+Il metodo <b>simulate()</b> della
+classe <b>HSystem</b>, effettua i calcoli di portata a partire da ogni
+sorgente e stampa, per ogni elemento, il nome la portata in
+ingresso e in uscita (per lo scarico solo nome e portata in ingresso).<br>
+<br>
+<span style="font-style: italic;">Suggerimento: dato un oggetto, per
+sapere se &egrave; un'istanza di una classe si pu&ograve; usare
+l'operatore <code>instanceof.</code> </span><br>
+<span style="font-style: italic;">Es. </span>
+<b>if(element instanceof Source)</b>
+
+
+<h2>R5. Visualizzazione (opzionale)</h2>
+
+Il metodo <b>layout()</b> della classe <b>HSystem</b> restituisce una stringa
+che contiene la disposizione degli element del sistema utilizzando caratteri
+ASCI e opportune spaziature.
+<p>
+Per esempio, un sistema compost da una <i>Source</i> connessa a un <i>Tap</i>,
+che &egrave; connesso a uno <i>Split</i> le cui uscite sono connesse a dei <i>Sink</i>,
+averebbe un layout simile al seguente:
+<pre>
+[Src]Source -> [R]Tap -> [T]Split +-> [sink A]Sink |
+                                  |
+                                  +-> [sink B]Sink | 
+</pre>
+</body>
+</html>

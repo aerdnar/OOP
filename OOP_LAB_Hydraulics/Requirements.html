@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<style type="text/css">
+<!--
+body {
+	margin: 0.5cm;
+	/*
+	font-size: 13px;
+	*/
+	}
+p   {
+    margin-top: 0.1em;
+    margin-bottom: 0.5em;
+    }
+b   {
+	font-family: monospace;
+	color: MidnightBlue;
+	background: #f8f8f8;
+	border-radius: 2pt;
+	padding: 1pt;
+/*
+    font-size=85%;
+	border: 1pt dotted silver;
+*/
+	}
+	
+i   {
+	color: Navy;
+	font-family: monospace;
+	}
+	
+h1  {
+	font-family: sans-serif;
+	text-align: center;
+    line-height: 1.1em;
+	}
+	
+h2  {
+    /*float: left;*/
+    margin-top: 0;
+    padding: 5px 10px 5px 0px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    line-height: 0.8em;
+	color: RoyalBlue;
+	font-family: sans-serif;
+	border-top: 1px dotted gray;
+	}
+table {
+	float: right;
+	margin: 20px;
+	border-collapse:collapse;
+	border-bottom: 1px solid Navy;
+	border-top: 1px solid Navy;
+	}
+td, th  {
+	padding: 1px 5px 1px 5px;
+	}
+tr:nth-child(even) {
+    background-color: PowderBlue;
+    margin: 1pt solid PowderBlue;
+}
+-->
+</style>
+<title>OOP Hydraulic System Simulation</title>
+
+</head>
+<body>
+<h1 style="text-align: center;">Hydraulic System Simulation</h1>
+
+Design and implement a program to manage the simulation of an hydraulic system.<br>
+All the classes must belong to the package <code>hydraulic</code>.
+<p>
+
+<h2>R1. Elements and pipes</h2>
+A hydraulic system is composed of elements (of different types) 
+connected to each other through pipes.
+A system is represented by an object of class <b>HSystem</b> that 
+provides the method <b>addElement()</b> that accepts 
+as argument an object of class <b>Element</b> and adds it to an internal list.
+<br>
+By means of method <b>getElements()</b> it is possible to get an array of the 
+elements that compose the system.
+The length of the array corresponds to the number of elements added to the system.
+<br>
+
+<h2>R2. Simple elements</h2>
+
+The simple elements are represented by the classes <b>Source</b>, <b>Tap</b>, 
+and <b>Sink</b>.
+<br>
+All elements have a name that can be read through the getter method <b>getName()</b>.
+<br>
+It is possible to connect the output of an element to the input of another element by 
+means of the method <b>connect()</b>
+that accepts as argument the element whose input should be connected to the output of the subject:
+<i>a.connect(b);</i> connects the output of element <i>a</i> to the input of element <i>b</i>.
+<br>
+The invocation of method connect on class Sink has no effect and simply prints an error message.
+<br>
+Given an element, it is possible to know to which other output element it is connected by means
+ of the method <b>getOutput()</b> that returns an Element object.
+<p>
+
+
+<h2>R3. Complex elements</h2>
+In addition to the simple elements described above, there are some complex elements.
+The "<i>T</i>" element, represented by class <b>Split</b>, allows splitting the input flow into
+two output flows. For this class, the <b>connect()</b> method accept an additional argument
+specifying which determines the output that is being connected, such parameter may assume
+the values <i>0</i> for the first output and <i>1</i> for the second output.
+<br>
+For this class, it is possible to know which elements are connected to the outputs, by means
+of the method <b>getOutputs()</b> that returns an array. 
+<p>
+
+<h2>R4. Simulation</h2>
+
+Given a <i>valid</i> system, i.e. a tree with a source as the root and where each path ends with a sink,
+it is possible to compute flow and how it is split among the distinct paths.
+<p>
+The computation takes place into two phases: in the first phase the parameters of
+the elements belonging to the system are defined, in the second phase the 
+simulation starts. 
+<p>
+The exit flow of a Source can be defined through the method <b>setFlow()</b> that accepts a number 
+representing the flow in cubic meters per hour.
+<br>
+Taps can be set open or closed using the method <b>setOpen()</b> that accepts a boolean argument.
+When a tap is open the output flow is equal to the input flow, otherwise the output is zero.
+<br>
+For the T split the input flow is divided into two equal output flows (each a half of the input flow).
+<p>
+The <b>simulate()</b> method of class <i>HSystem</i>, performs the flow computations for each element in the system
+starting from each source and prints, for each element, the name, the input, and the output flow.
+(for the source, only the output flow, and for the sink just the input flow).
+<p>
+<span style="font-style: italic;">Hint: given an object, to find out if it is an instance
+of a specific class the operator <i>instanceof</i> can be used.<br/>
+E.g. </span><b>if( element instanceof Source )</b>.
+
+
+<h2>R5. Visualization (optional)</h2>
+
+Method <b>layout()</b> of class <i>HSystem</i> returns a string containing
+the layout of the system using ASCII characters and spacing.
+<p>
+For instance, a system composed of a <i>Source</i>, connected to a <i>Tab</i>, 
+that is connected to a <i>Split</i> whose outputs are connected to <i>Sink</i>s,
+would return a layout like the following one:
+<pre>
+[Src]Source -> [R]Tap -> [T]Split +-> [sink A]Sink |
+                                  | 
+                                  +-> [sink B]Sink | 
+</pre>
+</body>
+</html>
