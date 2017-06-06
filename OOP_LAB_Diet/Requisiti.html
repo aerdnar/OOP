@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<style type="text/css">
+<!--
+body {
+	margin: 0.5cm;
+	/*
+	font-size: 13px;
+	*/
+	}
+p   {
+    margin-top: 0.1em;
+    margin-bottom: 0.5em;
+    }
+b   {
+	font-family: monospace;
+	color: MidnightBlue;
+	background: #f8f8f8;
+	border-radius: 2pt;
+	padding: 1pt;
+/*
+    font-size=85%;
+	border: 1pt dotted silver;
+*/
+	}
+	
+i   {
+	color: Navy;
+	font-family: monospace;
+	}
+	
+h1  {
+	font-family: sans-serif;
+	text-align: center;
+    line-height: 1.1em;
+	}
+	
+h2  {
+    /*float: left;*/
+    margin-top: 0;
+    padding: 5px 10px 5px 0px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    line-height: 0.8em;
+	color: RoyalBlue;
+	font-family: sans-serif;
+	border-top: 1px dotted gray;
+	}
+table {
+	float: right;
+	margin: 20px;
+	border-collapse:collapse;
+	border-bottom: 1px solid Navy;
+	border-top: 1px solid Navy;
+	}
+td, th  {
+	padding: 1px 5px 1px 5px;
+	}
+tr:nth-child(even) {
+    background-color: PowderBlue;
+    margin: 1pt solid PowderBlue;
+}
+-->
+</style>
+
+  <title>Laboratorio - Dieta</title>
+  <meta name="revision" content="16 Aprile 2015">
+</head>
+<body>
+<h1 style="text-align: center;">Dieta<br>
+</h1>
+Sviluppare un'applicazione che consenta di gestire la dieta tramite il
+calcolo dei valori nutritivi.<br>
+L'applicazione deve permettere di definire le materie prime e di
+utilizzarli come ingredienti per le ricette.<br>
+Tutte le classi devono essere nel package "<b>diet</b>".<br>
+
+
+<h2>R1 - Materie Prime<br>
+</h2>
+Il sistema agisce tramite la classe <b>Food</b>.
+<br>
+Per definire una materia prima, si utilizza il metodo <b>defineRawMaterial()</b> che riceve
+come parametri il nome, le kilo-calorie, le proteine, i
+carboidrati e i grassi, tutti riferiti a 100 grammi di materia prima. 
+Si pu&ograve; assumere che il nome delle materie prima sia univoco.
+<br>
+Per avere informazioni sulle materie prime, si utilizza il metodo <b>rawMaterials()</b> che restituisce la
+collezione delle materie prime in ordine alfabetico. Per ottenere le
+informazioni su una specifica materia prima ci si
+avvale del metodo <b>getRawMaterial()</b>
+che riceve come parametro il nome e restituisce la materia prima
+corrispondente.<br>
+<p>
+Gli elementi restituiti dai due metodi precedenti implementano
+l'interfaccia <b>NutritionalElement</b>
+che definisce i metodi <b>getName()</b>,
+<b>getCalories()</b>, <b>getProteins()</b>, <b>getCarbs()</b>, <b>getFat()</b>. Le calorie sono
+espresse in KCal, mentre proteine, carboidrati e grassi sono espressi
+in grammi.<br>
+Inoltre l'interfaccia definisce il metodo booleano <b>per100g()</b> che indica se il valori
+nutritivi sono espressi per 100 grammi di elemento oppure esprimono un
+valore assoluto.<br>
+Nel caso delle materie prime i valori nutritivi sono espressi sempre per 100
+grammi.<br>
+
+
+<h2>R2 - Prodotti
+</h2>
+E' possibile considerare anche prodotti preconfezionati (ad esempio un
+cono gelato). I prodotti vengono definiti tramite il metodo <b>defineProduct()</b> della classe
+<b>Food</b> che riceve come
+parametri il nome, le kilo-calorie totali, le proteine, i
+carboidrati e i grassi che esprimono i valori complessivi per il
+prodotto (metodo <b>per100g()</b> restituisce <code>false</code>).
+Si pu&ograve; assumere che il nome del prodotto sia univoco.
+<br>
+Per avere informazioni sui prodotti si utilizza il metodo <b>products()</b> della classe <b>Food</b> che
+restituisce la
+collezione dei prodotti in ordine alfabetico. Per otterenere le
+informazioni su uno specifico prodotto ci si avvale del metodo <b>getProduct()</b> della classe <b>Food</b>
+che riceve come
+parametro il nome e restituisce il prodotto corrispondente.<br>
+Gli elementi restituiti dai due metodi precedenti implementano
+l'interfaccia <b>NutritionalElement</b>;
+i valori sono espressi per prodotto (non per
+100 grammi).<br>
+
+
+<h2>R3 - Ricette
+</h2>
+Le materie prime possono essere combinate come ingredienti di ricette.
+Per definire una ricetta viene creato un oggetto di classe <b>Recipe</b>, al quale vengono aggiunti
+gli ingredienti. Il costruttore della classe <b>Recipe</b> riceve come
+parametro il nome della ricetta e l'oggetto <b>Food</b> a cui si riferisce.
+Si pu&ograve; assumere che il nome della ricetta sia univoco.<br>
+Un ingrediente viene aggiunto ad una ricetta tramite il metodo <b>addIngredient()</b> che riceve
+come parametri il nome di una materia prima e la sua quantit&agrave; in
+grammi.<br>
+La classe Recipe implementa l'interfaccia <b>NutritionalElement</b>; i valori
+nutrizionali sono espressi per 100 grammi.<br>
+Alla creazione di una ricetta, essa viene aggiunta automaticamente ai
+cibi contenuti nell'oggetto <b>Food</b> relativo. Per avere informazioni
+sulle ricetta si utilizza il metodo <b>recipes()</b>
+della classe <b>Food</b> che restituisce la collezione delle ricetta in
+ordine alfabetico. Per
+otterenere le informazioni su una specifica ricetta ci si avvale del
+metodo <b>getRecipe()</b> della
+classe <b>Food</b> che riceve
+come parametro il nome e restituisce la ricetta corrispondente.<br>
+<i>Attenzione</i>: la somma delle
+quantit&agrave; (in grammi) degli ingredienti di una ricetta non
+necessariamente &egrave; pari a 100g, i valori nutrizionali della
+ricetta devono essere invece riferiti ad un'ipotetica porzione di 100g.<br>
+
+
+<h2>R4 - Men&ugrave;<br>
+</h2>
+Il men&ugrave; &egrave; composto sia da porzioni sia di ricette che di
+prodotti preconfezionati.<br>
+Il men&ugrave; &egrave; rappresentato dalla classe <b>Menu</b> il cui costruttore riceve come
+parametri il nome e l'oggetto <b>Food</b> che contiene le informazioni sui
+cibi. <br>
+Per aggiungere una
+porzione di una ricetta si usa il metodo <b>addRecipe()</b> che riceve come
+parametro il nome di una ricetta e la dimensione della porzione in
+grammi.
+Per aggiungere un prodotto preconfezionato si usa il metodo <b>addProduct()</b> che riceve come
+parametro il nome di un prodotto.<br>
+Inoltre la classe <b>Menu</b> implementa l'interfaccia <b>NutritionalElement</b>; in
+questo caso i valori restituiti si riferiscono al totale del menu e non
+ai 100 grammi.<br>
+<br>
+<hr style="width: 100%; height: 2px;"><br>
+<b></b>
+</body>
+</html>
