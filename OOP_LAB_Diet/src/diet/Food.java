@@ -7,7 +7,7 @@ import java.util.TreeMap;
 /**
  * Facade class for the diet management. It allows defining and retrieving raw
  * materials and products.
- *
+ * 
  */
 public class Food {
 	private SortedMap<String, NutritionalElement> materials = new TreeMap<>();
