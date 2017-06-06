@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 /**
  * Facade class for the diet management. It allows defining and retrieving raw
- * materials and products.
+ * materials and products. 
  *
  */
 public class Food {

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Represents a complete menu. It consist of packaged products and servings of
- * recipes.
+ * recipes. 
  *
  */
 public class Menu implements NutritionalElement {
