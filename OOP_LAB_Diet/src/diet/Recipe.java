@@ -9,7 +9,7 @@ import java.util.List;
  * A recipe consists of a a set of ingredients that are given amounts of raw
  * materials. The overall nutritional values of a recipe can be computed on the
  * basis of the ingredients' values and are expressed per 100g
- *  
+ * 
  *
  */
 public class Recipe implements NutritionalElement {
