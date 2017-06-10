@@ -94,15 +94,15 @@ public class Clinic {
 	 */
 	public Collection<String> countPatientsPerSpecialization(){
 		//Comparator because Eclipse it's too stupid
-		Comparator<Map.Entry<String, Long>> comparingValueReverseOrder = Comparator.comparing(
-				Map.Entry::getValue, Comparator.reverseOrder());
+		Comparator<Map.Entry<String, Long>> comparingValueReverseOrder = 
+				Comparator.comparing(Map.Entry::getValue, Comparator.reverseOrder());
 		
 		return doctors.entrySet().stream()
 		.map(Map.Entry::getValue)
 		.collect(Collectors.groupingBy(
-						Doctor::getSpecialization,
-						Collectors.summingLong(
-								f -> f.getPatients().size())
+				Doctor::getSpecialization,
+				Collectors.summingLong(
+						f -> f.getPatients().size())
 				))
 		.entrySet().stream()
 		.sorted(comparingValueReverseOrder
