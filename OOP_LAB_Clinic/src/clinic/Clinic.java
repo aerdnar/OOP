@@ -59,8 +59,8 @@ public class Clinic {
 	 */
 	Collection<Doctor> busyDoctors(){
 		int average = doctors.values().stream()
-							.collect(Collectors.averagingInt(e -> e.getPatients().size()))
-							.intValue();
+				.collect(Collectors.averagingInt(e -> e.getPatients().size()))
+				.intValue();
 		
 		return doctors.entrySet().stream()
 				.map(Map.Entry::getValue)
@@ -95,7 +95,7 @@ public class Clinic {
 	public Collection<String> countPatientsPerSpecialization(){
 		//Comparator because Eclipse it's too stupid
 		Comparator<Map.Entry<String, Long>> comparingValueReverseOrder = Comparator.comparing(
-														Map.Entry::getValue, Comparator.reverseOrder());
+				Map.Entry::getValue, Comparator.reverseOrder());
 		
 		return doctors.entrySet().stream()
 		.map(Map.Entry::getValue)
